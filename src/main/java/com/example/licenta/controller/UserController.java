@@ -1,12 +1,13 @@
 package com.example.licenta.controller;
 
-import com.example.licenta.model.User;
+import com.example.licenta.model.*;
 import com.example.licenta.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 
 @RestController
 @RequestMapping("users")
@@ -15,23 +16,44 @@ public class UserController {
     @Resource
     private UserService userService;
 
-    @PostMapping
-    public ResponseEntity<?> save(@RequestBody User user) {
-        return new ResponseEntity<>(userService.save(user), HttpStatus.OK);
-    }
-
-    @GetMapping("/{user}/{password}")
-    public ResponseEntity<?> findUser(@PathVariable String user,@PathVariable String password){
-        User user1 = userService.findUser(user, password);
-        if(user1!=null) {
-            return new ResponseEntity<>(user1,HttpStatus.OK);
+    @PostMapping("/findUser")
+    public ResponseEntity<User> findUser(@RequestBody User user){
+        User existingUser = userService.findUser(user);
+        if(existingUser != null) {
+            return new ResponseEntity<>(existingUser, HttpStatus.OK);
         }
         else return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-
     }
 
-    @GetMapping
-    public ResponseEntity<?> findAllUsers() {
-        return new ResponseEntity<>(userService.findAll(), HttpStatus.OK);
+    @PutMapping("/updateProgress")
+    public ResponseEntity<User> updateProgress(@RequestBody UpdateProgressObject updateProgressObject){
+        User user = userService.updateProgress(updateProgressObject.getEmail(), updateProgressObject.getChapter());
+        if(user != null) {
+            return new ResponseEntity<>(user, HttpStatus.OK);
+        }
+        else return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
+
+    @GetMapping("/getUserProgress/{email}")
+    public ResponseEntity<ArrayList<String>> getUserProgress(@PathVariable String email){
+        System.out.println(email);
+        ArrayList<String> progress = userService.getUserProgress(email);
+        return new ResponseEntity<>(progress, HttpStatus.OK);
+    }
+
+    @PutMapping("/updateResults")
+    public ResponseEntity<User> updateResults(@RequestBody UpdateResultsObject updateResultsObject){
+        User user = userService.updateResults(updateResultsObject.getEmail(), updateResultsObject.getChapter(), updateResultsObject.getScore());
+        if(user != null) {
+            return new ResponseEntity<>(user, HttpStatus.OK);
+        }
+        else return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @GetMapping("/getUserResults/{email}")
+    public ResponseEntity<ArrayList<Result>> getUserResults(@PathVariable String email){
+        System.out.println(email);
+        ArrayList<Result> results = userService.getUserResults(email);
+        return new ResponseEntity<ArrayList<Result>>(results, HttpStatus.OK);
+}
 }

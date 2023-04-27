@@ -1,6 +1,6 @@
 package com.example.licenta.repository;
 
-import com.example.licenta.model.GlobalDetails;
+
 import com.example.licenta.model.Message;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

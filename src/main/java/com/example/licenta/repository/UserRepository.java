@@ -6,13 +6,12 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
-public interface UserRepository extends JpaRepository<User,Long> {
+public interface UserRepository extends JpaRepository<User,Integer> {
 
         public User findUserByEmailAndPassword(String email,String password);
 
-        @Query("select u from User u where u.role = 'admin'")
-        public User findAdminAccount();
+        public User findUserByEmail(String email);
 
-        @Query("select u from User u where u.role != 'admin'")
-        public List<User> findAllUsers();
+
+        //public User addUser(String username, String email, String password);
 }
