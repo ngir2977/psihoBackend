@@ -28,16 +28,16 @@ public class UserController {
     @PutMapping("/updateProgress")
     public ResponseEntity<User> updateProgress(@RequestBody UpdateProgressObject updateProgressObject){
         User user = userService.updateProgress(updateProgressObject.getEmail(), updateProgressObject.getChapter());
-        if(user != null) {
+        if(user != null)
             return new ResponseEntity<>(user, HttpStatus.OK);
-        }
-        else return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        else
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @GetMapping("/getUserProgress/{email}")
-    public ResponseEntity<ArrayList<String>> getUserProgress(@PathVariable String email){
+    public ResponseEntity<String> getUserProgress(@PathVariable String email){
         System.out.println(email);
-        ArrayList<String> progress = userService.getUserProgress(email);
+        String progress = userService.getUserProgress(email);
         return new ResponseEntity<>(progress, HttpStatus.OK);
     }
 
@@ -56,4 +56,10 @@ public class UserController {
         ArrayList<Result> results = userService.getUserResults(email);
         return new ResponseEntity<ArrayList<Result>>(results, HttpStatus.OK);
 }
+    @GetMapping("/getUserTestResult/")
+    public ResponseEntity<String> getUserTestResult(@RequestBody ResultTest testResultsObject){
+
+        String result = userService.getUserResult(testResultsObject.getEmail(),testResultsObject.getChapter());
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
 }

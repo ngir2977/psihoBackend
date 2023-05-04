@@ -44,13 +44,13 @@ public class UserService{
         }
         return user;
     }
-    public ArrayList<String> getUserProgress (String email) {
+    public String getUserProgress (String email) {
         System.out.println(email);
         String progress = userRepository.findUserByEmail(email).getProgress();
         System.out.println(progress);
         String[] arr = progress.split(";");
         ArrayList<String> list = new ArrayList<String>(Arrays.asList(arr));
-        return list;
+        return list.get(list.size()-1);
     }
 
     public User updateResults(String email, String nameChapter, float score) {
@@ -66,6 +66,7 @@ public class UserService{
         }
         return user;
     }
+
     public ArrayList<Result> getUserResults(String email) {
         System.out.println(email);
         String results = userRepository.findUserByEmail(email).getResults();
@@ -82,5 +83,27 @@ public class UserService{
         }
         return res;
 }
+
+   public String getUserResult(String email,String chapter) {
+
+       System.out.println(email);
+       String results = userRepository.findUserByEmail(email).getResults();
+       System.out.println(results);
+       String[] arr = results.split(";");
+
+       ArrayList<Result> res = new ArrayList<>();
+       ArrayList<String> list = new ArrayList<String>(Arrays.asList(arr));
+
+       for (int i = 0; i < list.size(); i++) {
+           String[] splitResult = list.get(i).split(":");
+           if(splitResult[0].equals(chapter))
+           {
+               return splitResult[1];
+           }
+
+       }
+      return "0";
+   }
+
 
 }
