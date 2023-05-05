@@ -18,8 +18,8 @@ public class LicentaConfiguration {
         mailSender.setHost("smtp.gmail.com");
         mailSender.setPort(587);
 
-        mailSender.setUsername("licentapracticaadm@gmail.com");
-        mailSender.setPassword("adakarqczbmfcrrl");
+        mailSender.setUsername("psiho.remainders@gmail.com");
+        mailSender.setPassword("bjnlorkxxsxewgqo");
 
         Properties props = mailSender.getJavaMailProperties();
         props.put("mail.transport.protocol", "smtp");
