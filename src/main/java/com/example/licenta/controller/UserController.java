@@ -43,6 +43,7 @@ public class UserController {
 
     @PutMapping("/updateResults")
     public ResponseEntity<User> updateResults(@RequestBody UpdateResultsObject updateResultsObject){
+
         User user = userService.updateResults(updateResultsObject.getEmail(), updateResultsObject.getChapter(), updateResultsObject.getScore());
         if(user != null) {
             return new ResponseEntity<>(user, HttpStatus.OK);
@@ -51,10 +52,10 @@ public class UserController {
     }
 
     @GetMapping("/getUserResults/{email}")
-    public ResponseEntity<ArrayList<Result>> getUserResults(@PathVariable String email){
+    public ResponseEntity<ArrayList<String>> getUserResults(@PathVariable String email){
         System.out.println(email);
-        ArrayList<Result> results = userService.getUserResults(email);
-        return new ResponseEntity<ArrayList<Result>>(results, HttpStatus.OK);
+        ArrayList<String> results = userService.getUserResults(email);
+        return new ResponseEntity<ArrayList<String>>(results, HttpStatus.OK);
 }
     @GetMapping("/getUserTestResult/")
     public ResponseEntity<String> getUserTestResult(@RequestBody ResultTest testResultsObject){

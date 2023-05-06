@@ -34,12 +34,7 @@ public class UserService{
     public User updateProgress(String email, String nameChapter) {
         User user = userRepository.findUserByEmail(email);
         if (user != null) {
-            String progress = user.getProgress();
-            if (progress == null) {
-                progress = "";
-            }
-            progress = progress + nameChapter + ";";
-            user.setProgress(progress);
+            user.setProgress(nameChapter);
             user = userRepository.save(user);
         }
         return user;
@@ -53,35 +48,28 @@ public class UserService{
         return list.get(list.size()-1);
     }
 
-    public User updateResults(String email, String nameChapter, float score) {
+    public User updateResults(String email, String nameChapter, String score) {
         User user = userRepository.findUserByEmail(email);
         if (user != null) {
             String results = user.getResults();
             if (results == null) {
                 results = "";
             }
-            results = results + nameChapter + ":" + score + ";";
+            results = results + "," + score;
             user.setResults(results);
             user = userRepository.save(user);
         }
         return user;
     }
 
-    public ArrayList<Result> getUserResults(String email) {
-        System.out.println(email);
+    public ArrayList<String> getUserResults(String email) {
         String results = userRepository.findUserByEmail(email).getResults();
-        System.out.println(results);
-        String[] arr = results.split(";");
+        String[] arr = results.split(",");
 
-        ArrayList<Result> res = new ArrayList<>();
+
         ArrayList<String> list = new ArrayList<String>(Arrays.asList(arr));
 
-        for (int i = 0; i < list.size(); i++) {
-            String[] splitResult = list.get(i).split(":");
-            Result result = new Result(splitResult[0], (long) Double.parseDouble(splitResult[1]));
-            res.add(result);
-        }
-        return res;
+        return list;
 }
 
    public String getUserResult(String email,String chapter) {
