@@ -3,7 +3,7 @@ package com.example.licenta.model;
 public class UpdateResultsObject {
     public String email;
     public String chapter;
-    public float score;
+    public String score;
 
     public String getEmail() {
         return email;
@@ -13,7 +13,7 @@ public class UpdateResultsObject {
         return chapter;
     }
 
-    public float getScore() {
+    public String getScore() {
         return score;
 }
 }
