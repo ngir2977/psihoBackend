@@ -19,10 +19,10 @@ public class CommentService{
        return commentRepository.save(comment);
    }
 
-   public ArrayList<Comment> findAllByNameChapter(String chapter)
+   public List<Comment> findAllByNameChapter(Integer chapterId)
    {
 
-       return commentRepository.findAllByChapter(chapter);
+       return commentRepository.findAllByChapterId(chapterId);
    }
 
     public List<Comment> findAll() {
