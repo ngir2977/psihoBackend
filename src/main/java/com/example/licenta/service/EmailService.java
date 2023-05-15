@@ -1,4 +1,4 @@
-package com.example.licenta.controller;
+package com.example.licenta.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
@@ -15,7 +15,7 @@ public class EmailService {
 
     public void sendSimpleMessage(String to, String subject, String text) {
         SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom("psiho.remainders@gmail.com");
+        message.setFrom("psiho.remainders@gmail.com"); // password email: qwerty123!@#
         message.setTo(to);
         message.setSubject(subject);
         message.setText(text);
